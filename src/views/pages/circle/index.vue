@@ -3,7 +3,7 @@
     <el-header height="70px">
       <op-list :list="list"></op-list>
     </el-header>
-    <el-main>xxxxxxxxxxxxxxxxx</el-main>
+    <el-main>FFFFFFFFFFFFFFFF</el-main>
   </el-container>
 </template>
 <script>

@@ -1,36 +1,16 @@
-export default
-[
-  {
-    label: 'index',
-    name: 'index'
-  },
-  {
-    label: '一级 1',
-    name: 'a',
-    children: [
-      {
-        name: 'b',
-        label: '二级 1-1',
-        children: [
-          {
-            name: 'x'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    label: '一级 2',
-    name: 'c',
-    children: [
-      {
-        name: 'd',
-        label: '二级 2-1'
-      },
-      {
-        name: 'e',
-        label: '二级 2-2'
-      }
-    ]
+let navs = []
+const components = require.context('./views/pages', true, /\/config\.js$/)
+
+components.keys().sort((a, b) => {
+  return a.replace('/config.js', '') > b.replace('/config.js', '')
+}).forEach((item, i) => {
+  let path = item.split('/')
+  let pos = navs
+  for (let i = 0, len = path.length - 3; i < len; i++) {
+    pos = pos[pos.length - 1].children
   }
-]
+  let nav = components(item).nav
+  pos.push(Object.assign({children: [], name: item.replace('/config.js', '').replace('./', '/')}, nav))
+})
+
+export default navs

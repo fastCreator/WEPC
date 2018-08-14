@@ -3,7 +3,9 @@
     <el-header height="70px">
       <op-list :list="list"></op-list>
     </el-header>
-    <el-main>Main</el-main>
+    <el-main>FFFFFFFFFFFFFFFF
+      <el-input/>
+    </el-main>
   </el-container>
 </template>
 <script>

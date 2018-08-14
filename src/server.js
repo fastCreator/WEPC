@@ -1,8 +1,11 @@
 import APIConnection from './APIConnection'
-const wsUrl = 'ws://39.105.16.49:51717/xwjc'
+const wsUrl = 'ws://47.98.59.172:51717/guimi'
+const username = 'admin'
+const passwd = 'admin'
+const debug = true
 var apiInfoData = {}
 var apiCallback = {}
-var apiconn
+window.apiconn = null
 
 function getData (attr, callback) {
   // attr.person_id=person_id;
@@ -50,15 +53,24 @@ function startApiconn () {
     }
   }
 }
-
+var isconect = false
+window.islogin = false
 var init = function (startCall) {
   startApiconn()
   apiconn.wsUri = wsUrl
   var server_infoCall = function () {
-    // 这是入口
-    window.console.info('start!!')
-    if (startCall) {
-      startCall()
+    if (debug) {
+      window.server.login(username, passwd, function () {
+        isconect = true
+        if (startCall) {
+          startCall()
+        }
+      })
+    } else {
+      isconect = true
+      if (startCall) {
+        startCall()
+      }
     }
   }
 
@@ -79,31 +91,30 @@ window.server = {
   login: function (account, code, call) {
     // var type = 1
     apiCallback['person_login'] = function (data) {
-      // 这是入口
-      window.console.info('login回调!!', data)
-      window.localStorage.account = account
-      window.localStorage.code = code
       window.isLogin = true
       if (call) {
         call(data)
       }
     }
     var attr = {
-      'ctype': 'admin',
+      'level': 'admin',
       'login_name': account,
       'login_passwd': code
     }
     apiconn.credentialx(attr)
     apiconn.connect()
-    // var attr = {
-    //   'access_token': access_token,
-    //   'ctype': 'user',
-    //   'openid': openid
-    // }
-    // apiconn.credentialx(attr)
-    // apiconn.connect()
   },
-
+  send (attr, call) {
+    if (isconect) {
+      getData(JSON.parse(JSON.stringify(attr)), function (data) {
+        if (call) {
+          call(data)
+        }
+      })
+    } else {
+      setTimeout(() => { window.server.send(attr, call) }, 500)
+    }
+  },
   admin_accountlist: function (call) {
     // 账号列表
     var attr = {
@@ -118,8 +129,3 @@ window.server = {
   }
 }
 init()
-// init(function () {
-//   // apiInfoData.server_info.download_path
-//   window.console.log(apiInfoData)
-//   server.login('xwjc2018', 'aa', function (data) { })
-// })

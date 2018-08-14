@@ -2,7 +2,7 @@
   <div class="login">
     <div class="logo"><img src="../assets/logo.png"></div>
     <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="form">
-      <div class="title">智营销平台</div>
+      <div class="title">闺蜜后台管理</div>
       <el-form-item label="用户名" prop="username">
         <el-input v-model="ruleForm2.username" auto-complete="off"></el-input>
       </el-form-item>
@@ -63,7 +63,7 @@ export default {
   }
   .form{
     margin: auto;
-    width: 500px;
+    width: 368px;
     margin-top: 100px;
     padding:14px 14px 10px;
     background: #fff;
@@ -74,8 +74,11 @@ export default {
       width: 100%;
       text-align: center;
     }
+    .el-input{
+      width:200px
+    }
     .el-button{
-      width:194px;
+      width:95px;
     }
   }
 }

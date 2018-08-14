@@ -2,53 +2,34 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './views/Login.vue'
 import Page from './views/Page.vue'
-import nav from './nav.js'
 
 Vue.use(Router)
 
-let navs = []
 let pages = []
-nav.forEach(it => {
-  if (it.children && it.children.length) {
-    it.children.forEach(jt => {
-      let path = `/${it.name}/${jt.name}`
-      if (jt.children) {
-        jt.children.forEach(ot => {
-          let path1 = `/${it.name}/${jt.name}/${ot.name}`
-          pages.push({
-            path: path1,
-            component: require(`./views/page${path1}.vue`).default
-          })
-        })
-      }
-      navs.push({
-        path: path,
-        component: require(`./views/page${path}.vue`).default
-      })
-    })
-  } else {
-    let path = `/${it.name}`
-    navs.push({
-      path: path,
-      component: require(`./views/page${path}.vue`).default
-    })
-  }
+const components = require.context('./views/pages', true, /\/index\.vue$/)
+components.keys().forEach((item, i) => {
+  let path = item.replace('/index.vue', '').replace('.', '')
+  let module = require('./views/pages' + item.replace('/index.vue', '/config.js').replace('.', ''))
+  pages.push(Object.assign({}, module.route, {
+    path: path,
+    name: path,
+    component: components(item).default
+  }))
 })
 
 let router = new Router({
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: Login
     },
     {
-      path: '/page',
+      path: '/',
       name: 'page',
       component: Page,
-      children: navs
-    },
-    ...pages
+      children: pages
+    }
   ]
 })
 

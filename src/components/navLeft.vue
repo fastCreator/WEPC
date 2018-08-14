@@ -4,14 +4,17 @@
       <template v-for="(c,i) in nav">
         <el-submenu v-if="c.children && c.children.length" :index="c.name" :key="i">
           <template slot="title">
-            <i class="el-icon-menu"></i>
-            <span>{{c.label}}</span>
+            <i :class="c.icon||'el-icon-menu'"></i>
+            <span>{{c.title}}</span>
           </template>
-          <el-menu-item v-for="(it,i) in c.children" :index="`/${c.name}/${it.name}`" :key="i">{{it.label}}</el-menu-item>
+          <el-menu-item v-for="(it,i) in c.children" :index="it.name" :key="i">
+            <i :class="c.icon||'el-icon-tickets'"></i>
+            {{it.title}}
+          </el-menu-item>
         </el-submenu>
-        <el-menu-item v-else :index="'/'+c.name" :key="i">
-          <i class="el-icon-setting"></i>
-          <span slot="title">{{c.label}}</span>
+        <el-menu-item v-else :index="c.name" :key="i">
+          <i :class="c.icon||'el-icon-tickets'"></i>
+          <span slot="title">{{c.title}}</span>
         </el-menu-item>
       </template>
     </el-menu>
