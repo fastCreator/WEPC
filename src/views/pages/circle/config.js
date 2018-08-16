@@ -1,3 +1,3 @@
 export const nav = {
-  title: '圈子'
+  title: '上传组件'
 }

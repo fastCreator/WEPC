@@ -1,8 +1,16 @@
 import APIConnection from './APIConnection'
-const wsUrl = 'ws://47.98.59.172:51717/guimi'
-const username = 'admin'
-const passwd = 'admin'
+const url = '47.104.245.204'
+const projectName = 'hfh2'
+const port = '51717'
+const wsUrl = `ws://${url}:${port}/${projectName}`
+const username = 'test1'
+const passwd = '1'
 const debug = true
+
+window.uploadUrl = `http://${url}/cgi-bin/upload.pl?proj=${projectName}`
+window.download = `http://${url}/cgi-bin/download.pl?proj=${projectName}&fid=`
+// window.download = `http://${url}/cgi-bin/download.pl?fid=`
+window.projectName = projectName
 var apiInfoData = {}
 var apiCallback = {}
 window.apiconn = null
@@ -57,7 +65,7 @@ var isconect = false
 window.islogin = false
 var init = function (startCall) {
   startApiconn()
-  apiconn.wsUri = wsUrl
+  window.apiconn.wsUri = wsUrl
   var server_infoCall = function () {
     if (debug) {
       window.server.login(username, passwd, function () {
@@ -77,7 +85,7 @@ var init = function (startCall) {
   apiCallback['server_info'] = function () {
     server_infoCall()
   }
-  apiconn.connect()
+  window.apiconn.connect()
 }
 
 window.server = {

@@ -1,7 +1,6 @@
 <template>
   <div class="navTop">
-        1231231
-        <el-button @click="logout">退出登录</el-button>
+    <el-button @click="logout" class="logout">退出登录</el-button>
   </div>
 </template>
 
@@ -12,11 +11,9 @@ export default {
     list: {}
   },
   data () {
-    return {
-    }
+    return {}
   },
-  created () {
-  },
+  created () {},
   methods: {
     logout () {
       window.server.logout(() => {
@@ -30,6 +27,10 @@ export default {
 .navTop {
   ul {
     list-style-type: none;
+  }
+  .logout{
+    float: right;
+    margin-top: 5px;
   }
 }
 </style>

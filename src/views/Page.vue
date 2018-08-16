@@ -1,19 +1,18 @@
 <template>
   <el-container class="page">
-    <el-header height="30px">
-      <nav-top></nav-top>
-    </el-header>
+    <el-aside width="200px">
+      <nav-left></nav-left>
+    </el-aside>
     <el-container>
-      <el-aside width="200px">
-        <nav-left></nav-left>
-      </el-aside>
+      <el-header height="50px">
+        <nav-top></nav-top>
+      </el-header>
       <el-main>
-
-        <jw-keep-alive ref="view" :read="read">
+        <jw-keep-alive :read="read" name="main_root">
           <full-screen v-if="$route.meta.fullScreen">
             <router-view />
           </full-screen>
-          <router-view v-else ref="ctx"/>
+          <router-view v-else ref="ctx" />
         </jw-keep-alive>
       </el-main>
     </el-container>
@@ -21,19 +20,26 @@
 </template>
 <script>
 export default {
+  name: 'main_root',
   data () {
     return {
-      read: false
+      read: false,
+      history: []
     }
   },
   created () {
-    // 把所有路由打平，实现A->A/详情页  时把A页面缓存下来    A/详情页 ->A 读取缓存    A->B页面释放缓存  ,能够在框架中，解决全屏模态窗口，路由回退问题，以及详情等单独占用一个路由
     this.$router.beforeEach((to, from, next) => {
+      // let key = history.state && history.state.key
+      // if (key === this.history[this.history.length - 1]) {
+      //   this.history.pop()
+      // } else {
+      //   this.history.push(key)
+      // }
       if (to.meta.fullScreen) {
-        this.$refs.view.$setCache()
+        this._setCache()
       }
       if (!from.meta.fullScreen && !to.meta.fullScreen) {
-        this.$refs.view.$des()
+        this._destroyCache()
       }
       if (from.meta.fullScreen) {
         this.read = true
@@ -78,6 +84,8 @@ body {
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
       height: calc(~"100% - 20px");
       box-sizing: border-box;
+      min-width: 1000px;
+      overflow: auto;
       > .el-container {
         > .el-header {
           padding: 0;

@@ -1,28 +1,23 @@
 <template>
-  <el-container>
-    <el-header height="70px">
-      <op-list :list="list"></op-list>
-    </el-header>
-    <el-main>FFFFFFFFFFFFFFFF</el-main>
-  </el-container>
+  <div>
+    <jw-upload v-model="fids"></jw-upload>
+  </div>
 </template>
 <script>
 export default {
   data () {
     return {
-      list: [
-        {
-          label: '标题一',
-          img: './list/test.png'
-        },
-        {
-          label: '标题一',
-          img: './list/test.png'
-        }
-      ]
+      fids: []
     }
   },
-  created () {},
+  watch: {
+    fids (n) {
+      console.log(n)
+    }
+  },
+  created () {
+    this.fids = ['f15344094106606600284001']
+  },
   methods: {}
 }
 </script>

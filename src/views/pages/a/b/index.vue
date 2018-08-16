@@ -15,6 +15,12 @@ export default {
   created () {
     console.log('b', this)
   },
+  activated () {
+    console.log('activated')
+  },
+  deactivated () {
+    console.log('deactivated')
+  },
   methods: {}
 }
 </script>
