@@ -2,7 +2,7 @@
   <div class="navLeft">
     <div class="company">
       <img src="../assets/logo.png">
-      <div class="name" v-show="!value">智营销平台</div>
+      <div class="name" v-show="!value">{{title}}</div>
     </div>
     <div class="collapse" @click="toggleCollapse">
       <i class="iconfont icon-zhankai"></i>
@@ -38,6 +38,7 @@ export default {
   },
   data () {
     return {
+      title: document.title,
       nav: [],
       active: this.$route.path
     }

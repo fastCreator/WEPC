@@ -447,9 +447,10 @@ function formItemRuleConfig ({ required, max, validator, type, regx, msg }) {
   .el-icon-document:before {
     content: ".";
     display: inline-block;
-    background: #1F2D3D;
+    background: #409EFF;
+    color:transparent;
     width: 4px;
-    height: 18px;
+    height: 20px;
   }
   &.read .el-form-item{
     pointer-events: none;

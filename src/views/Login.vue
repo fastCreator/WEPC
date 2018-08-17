@@ -2,7 +2,7 @@
   <div class="login">
     <div class="logo"><img src="../assets/logo.png"></div>
     <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="form">
-      <div class="title">闺蜜后台管理</div>
+      <div class="title">{{title}}</div>
       <el-form-item label="用户名" prop="username">
         <el-input v-model="ruleForm2.username" auto-complete="off"></el-input>
       </el-form-item>
@@ -20,6 +20,7 @@
 export default {
   data () {
     return {
+      title: document.title,
       ruleForm2: {
         username: '',
         pass: ''
