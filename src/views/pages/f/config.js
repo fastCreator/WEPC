@@ -1,3 +1,3 @@
 export const nav = {
-  title: '页面F'
+  title: '表格(table)'
 }

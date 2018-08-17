@@ -1,7 +1,7 @@
 <template>
   <el-container class="page">
-    <el-aside width="200px">
-      <nav-left></nav-left>
+    <el-aside :width="width">
+      <nav-left v-model="collapse"></nav-left>
     </el-aside>
     <el-container>
       <el-header height="50px">
@@ -24,7 +24,8 @@ export default {
   data () {
     return {
       read: false,
-      history: []
+      history: [],
+      collapse: false
     }
   },
   created () {
@@ -48,6 +49,11 @@ export default {
       }
       next()
     })
+  },
+  computed: {
+    width () {
+      return this.collapse ? '64px' : '200px'
+    }
   },
   methods: {}
 }

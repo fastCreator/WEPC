@@ -2,12 +2,12 @@
   <div class="navLeft">
     <div class="company">
       <img src="../assets/logo.png">
-      <div class="name">智营销平台</div>
+      <div class="name" v-show="!value">智营销平台</div>
     </div>
-    <div class="collapse">
+    <div class="collapse" @click="toggleCollapse">
       <i class="iconfont icon-zhankai"></i>
     </div>
-    <el-menu :default-active="active" @select="select" class="el-menu-vertical-demo" :collapse="false">
+    <el-menu :default-active="active" @select="select" class="el-menu-vertical-demo" :collapse="value">
       <template v-for="(c,i) in nav">
         <el-submenu v-if="c.children && c.children.length" :index="c.name" :key="i">
           <template slot="title">
@@ -33,7 +33,8 @@ import nav from '../nav.js'
 export default {
   name: 'navLeft',
   props: {
-    msg: String
+    msg: String,
+    value: Boolean
   },
   data () {
     return {
@@ -43,10 +44,14 @@ export default {
   },
   created () {
     this.nav = nav
+    console.log(this)
   },
   methods: {
     select (index) {
       this.$router.push({ path: index })
+    },
+    toggleCollapse () {
+      this.$emit('input', !this.value)
     }
   }
 }
@@ -61,11 +66,10 @@ export default {
     width: 100%;
     background: #1f2d3d;
     img {
-      padding: 5px;
       display: inline-block;
       width: 35px;
       height: 35px;
-      padding: 8px;
+      padding: 8px 14px;
       border-right: 1px solid #364251;
     }
     .name {
@@ -73,7 +77,7 @@ export default {
       color: #fff;
       font-size: 18px;
       line-height: 50px;
-      width: calc(100% - 52px);
+      width: calc(100% - 66px);
       vertical-align: top;
       text-align: center;
     }

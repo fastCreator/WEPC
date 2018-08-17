@@ -1,6 +1,6 @@
 <template>
   <div class="jw-upload">
-    <el-upload name="local_file" :action="action" :file-list="list" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="success" :data="param">
+    <el-upload name="local_file" :action="action" :file-list="list" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="success" :data="param" v-bind="bind">
       <i class="el-icon-plus"></i>
     </el-upload>
     <el-dialog :visible.sync="dialogImageUrl">
@@ -16,6 +16,11 @@ export default {
     value: {
       default () {
         return []
+      }
+    },
+    bind: {
+      default () {
+        return {}
       }
     }
   },
