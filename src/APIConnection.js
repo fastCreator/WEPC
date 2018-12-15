@@ -12,7 +12,7 @@ var APIConnection = function () {
     return this.conn_state == 'IN_SESSION'
   }
   this.clog = function (a) {
-    this.DEBUG && console.log((new Date()).toLocaleTimeString() + ': ' + a)
+    // this.DEBUG && console.log((new Date()).toLocaleTimeString() + ': ' + a)
   }
   this.pretty = function (a) {
     return JSON.stringify(JSON.parse(a), null, 2)

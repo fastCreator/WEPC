@@ -1,6 +1,15 @@
 <template>
   <div>
-    <jw-table v-bind="table"></jw-table>
+    <jw-table
+      v-bind="table"
+      @search="search"
+      ref="table"
+    ></jw-table>
+    <jw-dialog-form
+      v-bind="form"
+      :visible.sync="form.visible"
+      ref="form"
+    ></jw-dialog-form>
   </div>
 </template>
 <script>
@@ -23,12 +32,22 @@ export default {
             }
           }
         ],
-        page: {
-        },
+        page: {},
         btns: [
           {
             label: '新增市场计划',
-            click: function () { console.log(that) }
+            click: function () {
+              that.form.visible = true
+            }
+          },
+          {
+            label: '编辑',
+            click: function () {
+              that.form.visible = true
+              setTimeout(() => {
+                that.$refs.form.$setValue({ input: '摄入自', select: '', upload: ['f15344094106606600284001'] })
+              }, 0)
+            }
           }
         ],
         cols: [
@@ -56,11 +75,19 @@ export default {
             prop: 'planType',
             minWidth: 150,
             filterMultiple: false,
-            filters: [{ text: '全部', value: '' }, { text: '年度计划', value: 1 }, { text: '季度计划', value: 2 }, { text: '月度计划', value: 3 }, { text: '其他计划', value: 4 }],
+            filters: [
+              { text: '全部', value: '' },
+              { text: '年度计划', value: 1 },
+              { text: '季度计划', value: 2 },
+              { text: '月度计划', value: 3 },
+              { text: '其他计划', value: 4 }
+            ],
             fuc (row, h) {
               return {
                 type: 'text',
-                value: ['年度计划', '季度计划', '月度计划', '其他计划'][row.planType - 1]
+                value: ['年度计划', '季度计划', '月度计划', '其他计划'][
+                  row.planType - 1
+                ]
               }
             }
           },
@@ -69,11 +96,20 @@ export default {
             prop: 'status',
             minWidth: 150,
             filterMultiple: false,
-            filters: [{ text: '全部', value: '' }, { text: '计划中', value: 0 }, { text: '进行中', value: 2 }, { text: '已中止', value: 3 }, { text: '已结束', value: 4 }, { text: '已作废', value: 5 }],
+            filters: [
+              { text: '全部', value: '' },
+              { text: '计划中', value: 0 },
+              { text: '进行中', value: 2 },
+              { text: '已中止', value: 3 },
+              { text: '已结束', value: 4 },
+              { text: '已作废', value: 5 }
+            ],
             fuc (row, h) {
               return {
                 type: 'text',
-                value: [ '计划中', '', '进行中', '已中止', '已结束', '已作废' ][row.status]
+                value: ['计划中', '', '进行中', '已中止', '已结束', '已作废'][
+                  row.status
+                ]
               }
             }
           },
@@ -101,7 +137,10 @@ export default {
             sort: 'custom',
             prop: 'createTime',
             fuc: (row, h, index, i) => {
-              return this.$utils.Commom.formatDateDT(new Date(row.gmtCreate), 'yyyy-MM-dd')
+              return this.$utils.Commom.formatDateDT(
+                new Date(row.gmtCreate),
+                'yyyy-MM-dd'
+              )
             }
           },
           {
@@ -145,11 +184,87 @@ export default {
             }
           }
         ]
+      },
+      form: {
+        title: '标题',
+        visible: false,
+        form: {
+          read: false,
+          bind: {
+            props: {
+              labelWidth: '150px',
+              rules: {
+                auto: true,
+                input: {
+                  required: true
+                },
+                select: {
+                  required: true
+                },
+                upload: {
+                  required: true,
+                  type: 'array'
+                }
+              }
+            }
+          },
+          data: [
+            {
+              tag: 'el-input',
+              label: '输入框',
+              prop: 'input',
+              bind: {
+                props: {
+                  placeholder: '请输入注释'
+                }
+              }
+            },
+            {
+              tag: 'el-select',
+              label: '下拉框',
+              prop: 'select',
+              options: [
+                {
+                  value: 'shanghai',
+                  label: '上海'
+                },
+                {
+                  value: 'beijing',
+                  label: '北京'
+                }
+              ]
+            },
+            {
+              tag: 'jw-upload',
+              label: '上传图片',
+              prop: 'upload'
+            },
+            {
+              tag: 'btns',
+              label: '提交', // 不传默认提交
+              fuc (isok, value) {
+                console.log(value)
+              }
+            }
+          ],
+          hide: {
+            ptext: true
+          },
+          value: {
+            input: '',
+            select: '',
+            upload: []
+          }
+        }
       }
     }
   },
   created () {},
-  methods: {}
+  methods: {
+    search (d) {
+      console.log(d)
+    }
+  }
 }
 </script>
 <style lang="less">

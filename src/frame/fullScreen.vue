@@ -6,7 +6,7 @@
         <span>返回</span>
       </span>
       <span class="split">|</span>
-      <span>{{$route.meta.title}}</span>
+      <span>{{$route.params.title||$route.meta.title}}</span>
     </div>
     <slot></slot>
   </div>
@@ -24,7 +24,9 @@ export default {
       active: this.$route.path
     }
   },
-  created () {},
+  created () {
+    console.log(this)
+  },
   methods: {}
 }
 </script>

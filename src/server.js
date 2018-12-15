@@ -33,7 +33,7 @@ function startApiconn () {
   apiconn = new APIConnection()
   // 服务端连接状态改变了的通知 【初始化和登录 B】
   apiconn.state_changed_handler = function (ds) {
-    window.console.log(ds, 'state: ' + apiconn.from_state, ' => ' + apiconn.conn_state)
+    // window.console.log(ds, 'state: ' + apiconn.from_state, ' => ' + apiconn.conn_state)
     // 这时候成功进入登录状态了。没登录时候只是访客状态。
     if (apiconn.conn_state == 'IN_SESSION') {
       sessionStorage.setItem('login_name', apiconn.login_name)
@@ -52,7 +52,7 @@ function startApiconn () {
   // SDK 说服务端有数据过来了，这可以是请求的响应，或推送 【初始化和登录 C】
   apiconn.response_received_handler = function (jo) {
     var key = jo.obj + '_' + jo.act
-    window.console.log(key, 'JO:', jo)
+    // window.console.log(key, 'JO:', jo)
     if (key == 'server_info') {
       apiInfoData = jo
     }

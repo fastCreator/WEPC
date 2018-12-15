@@ -12,7 +12,7 @@ export default {
   },
   watch: {
     fids (n) {
-      console.log(n)
+      // console.log(n)
     }
   },
   created () {

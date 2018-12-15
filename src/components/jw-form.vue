@@ -52,9 +52,7 @@ export default {
     },
     $setValue (v) {
       this.oldValue = JSON.stringify(v)
-      console.log(v)
       this.myValue = clone(v)
-      console.log(this.myValue)
     },
     $hasChange () {
       let rgx = /"\w+":null,?/g
@@ -169,7 +167,7 @@ export default {
                 }
               }, that)
             }
-            that.$validate(opts.fuc)
+            that.$validate((isok) => { opts.fuc(isok, that.myValue) })
           }}
         }, opts.bind), opts.label || '取消'))
       }
@@ -369,6 +367,7 @@ function clone (Obj) {
  */
 
 function formItemRuleConfig ({ required, max, validator, type, regx, msg }) {
+  console.log(111111111)
   const err = {
     empty: '不能为空，请输入',
     format: '格式错误，请输入',
