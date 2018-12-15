@@ -2,7 +2,7 @@ let navs = []
 const components = require.context('./views/pages', true, /\/config\.js$/)
 
 components.keys().sort((a, b) => {
-  return a.replace('/config.js', '') > b.replace('/config.js', '')
+  return a.replace('/config.js', '') > b.replace('/config.js', '') ? 1 : -1
 }).forEach((item, i) => {
   let path = item.split('/')
   let pos = navs
