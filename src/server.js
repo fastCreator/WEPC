@@ -1,11 +1,14 @@
 import APIConnection from './APIConnection'
-const url = '47.104.245.204'
-const projectName = 'hfh2'
-const port = '51717'
-const wsUrl = `ws://${url}:${port}/${projectName}`
-const username = 'test1'
-const passwd = '1'
-const debug = true
+import { url, projectName, wsUrl, username, passwd, debug } from './config.js'
+
+window.homePath = '/a/b'
+// const url = '47.104.245.204'
+// const projectName = 'hfh2'
+// const port = '51717'
+// const wsUrl = `ws://${url}:${port}/${projectName}`
+// const username = 'test1'
+// const passwd = '1'
+// const debug = true
 
 window.uploadUrl = `http://${url}/cgi-bin/upload.pl?proj=${projectName}`
 window.download = `http://${url}/cgi-bin/download.pl?proj=${projectName}&fid=`
@@ -90,9 +93,8 @@ var init = function (startCall) {
 
 window.server = {
   logout (cb) {
-    window.localStorage.account = ''
-    window.localStorage.code = ''
     window.isLogin = false
+    location.hash = '#/login'
     cb()
   },
   // 登录
@@ -100,6 +102,7 @@ window.server = {
     // var type = 1
     apiCallback['person_login'] = function (data) {
       window.isLogin = true
+      location.hash = '#/'
       if (call) {
         call(data)
       }

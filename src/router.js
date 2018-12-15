@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './views/Login.vue'
 import Page from './views/Page.vue'
+import { homePage } from './config'
 
 Vue.use(Router)
 
@@ -28,25 +29,19 @@ let router = new Router({
       path: '/',
       name: 'page',
       component: Page,
-      children: pages
+      children: pages,
+      redirect: homePage
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   if (to.name !== 'login') {
-    next()
-    // if (window.isLogin) {
-    //   next()
-    // } else if (window.localStorage.account) {
-    //   setTimeout(() => {
-    //     window.server.login(window.localStorage.account, window.localStorage.code, () => {
-    //       next()
-    //     })
-    //   }, 1000)
-    // } else {
-    //   next('/')
-    // }
+    if (window.isLogin) {
+      next()
+    } else {
+      next('/login')
+    }
   } else {
     next()
   }

@@ -132,9 +132,9 @@ export default {
       }
       let components = getComponents(item)
       let question = null
-      if (item.question) {
-        question = <template slot='label'>{item.label}<bas-popover style='margin-left:6px;' content={item.question} placement='top' /></template>
-      }
+      // if (item.question) {
+      //   question = <template slot='label'>{item.label}<bas-popover style='margin-left:6px;' content={item.question} placement='top' /></template>
+      // }
       if (components !== false) {
         return h('el-form-item', merge({
           key: key,
@@ -261,12 +261,12 @@ export default {
       }
       mergeOpt = merge(opts, item.bind)
 
-      if (max && item.max) {
-        opts.directives.push({
-          name: 'jw-number',
-          value: max
-        })
-      }
+      // if (max && item.max) {
+      //   opts.directives.push({
+      //     name: 'jw-number',
+      //     value: max
+      //   })
+      // }
       return h(item.tag, mergeOpt, child)
     }
 
